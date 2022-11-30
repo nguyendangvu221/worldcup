@@ -8,20 +8,20 @@ class Team{
   final String groups;
   final int id;
   Team(this.nameEn,this.flag,this.fiFaCode,this.iso2,this.groups,this.id);
-  factory Team.fromJsonObject(Map<String, dynamic> jsonObject){
+  factory Team.fromJsonTeam(Map<String, dynamic> jsonTeam){
     return Team(
-      jsonObject["nameEn"] as String,
-      jsonObject["flag"] as String,
-      jsonObject["fiFaCode"] as String,
-      jsonObject["iso2"] as String,
-      jsonObject["groups"] as String,
-      jsonObject["id"] as int,
+      jsonTeam["nameEn"] as String,
+      jsonTeam["flag"] as String,
+      jsonTeam["fiFaCode"] as String,
+      jsonTeam["iso2"] as String,
+      jsonTeam["groups"] as String,
+      jsonTeam["id"] as int,
     );
   }
 }
-List<Map<String,dynamic>> convertFromJsonToListOfObject(String jsonString){
-  final jsonObject  = jsonDecode(jsonString);
-  return jsonObject;
+List<Map<String,dynamic>> convertFromJsonToListOfTeam(String jsonString){
+  final jsonTeam  = jsonDecode(jsonString);
+  return jsonTeam;
 }
 Future<List<Team>> getTeamFromBackend() async{
   List<Team> listTeam = [];
@@ -29,9 +29,9 @@ Future<List<Team>> getTeamFromBackend() async{
     final uri = Uri.parse(url);
     final response = await http.get(uri);
     final jsonString = response.body;
-    final jsonObject = convertFromJsonToListOfObject(jsonString);
-    for (var i = 0; i < jsonObject.length; i++) {
-    final team = Team.fromJsonObject(jsonObject[i]);
+    final jsonTeam = convertFromJsonToListOfTeam(jsonString);
+    for (var i = 0; i < jsonTeam.length; i++) {
+    final team = Team.fromJsonTeam(jsonTeam[i]);
     listTeam.add(team);
   }
   return listTeam;
